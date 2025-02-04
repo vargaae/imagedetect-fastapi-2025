@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
 from pydantic import BaseModel
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
@@ -16,7 +15,6 @@ MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40'
 
 # Initialize FastAPI app
 app = FastAPI()
-
 
 # 🔹 CORS engedélyezése
 app.add_middleware(
@@ -41,7 +39,7 @@ class ImageInput(BaseModel):
 
 
 # Endpoint to process image using Clarifai model
-@app.post("/clarifai/")
+@app.post("/predict/")
 async def predict(image_input: ImageInput):
     # Prepare and make the Clarifai API call
     post_model_outputs_response = stub.PostModelOutputs(
@@ -71,4 +69,3 @@ async def predict(image_input: ImageInput):
     concepts = [{"name": concept.name, "value": concept.value} for concept in output.data.concepts]
 
     return {"predictions": concepts}
-

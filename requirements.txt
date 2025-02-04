@@ -1,4 +1,4 @@
-fastapi==0.95.2
-uvicorn==0.22.0
-clarifai-grpc==2.10.0
-pydantic==1.11.1
+fastapi
+uvicorn
+clarifai-grpc
+pydantic
