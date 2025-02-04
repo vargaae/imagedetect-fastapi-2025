@@ -6,7 +6,7 @@ from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 from typing import List
 
-from newsapi import NewsApiClient
+from newsapi-python import NewsApiClient
 
 
 # Define your variables
