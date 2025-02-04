@@ -6,7 +6,7 @@ from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 from typing import List
 
-from newsapi-python import NewsApiClient
+from newsapi import NewsApiClient
 
 
 # Define your variables
@@ -74,7 +74,7 @@ async def predict(image_input: ImageInput):
     return {"predictions": concepts}
 
 # Initialize the NewsApiClient
-newsapidep = NewsApiClient(api_key='c6b7a51f201b426c9cfe9c5053d9bd5f')
+api = NewsApiClient(api_key='c6b7a51f201b426c9cfe9c5053d9bd5f')
 
 # Pydantic models for returning articles
 class Article(BaseModel):
@@ -91,7 +91,7 @@ class Article(BaseModel):
 async def get_top_headlines():
     try:
         # Fetch top headlines for 'chatgpt' from selected sources
-        top_headlines = newsapidep.get_top_headlines(
+        top_headlines = api.get_top_headlines(
             q='chatgpt',
             sources='bbc-news,the-verge',
             category='science',
@@ -114,7 +114,7 @@ async def get_top_headlines():
 async def get_all_articles():
     try:
         # Fetch all articles for 'chatgpt' from selected sources, domains, and date range
-        all_articles = newsapidep.get_everything(
+        all_articles = api.get_everything(
             q='chatgpt',
             sources='bbc-news,the-verge',
             domains='bbc.co.uk,techcrunch.com',
