@@ -2,7 +2,6 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
@@ -13,13 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-class Settings(BaseSettings):
-    app_name: str = "Awesome API"
-    admin_email: str
-    items_per_user: int = 50
-    
-    model_config = SettingsConfigDict(env_file=".env")
-    
+   
 PAT:str = ''
 PAT = os.getenv("CLARIFAI_API_KEY")
 
@@ -28,8 +21,6 @@ APP_ID = 'main'
 MODEL_ID = 'general-image-recognition'
 MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40'
 
-
-settings = Settings()
 app = FastAPI()
 
 # 🔹 CORS
