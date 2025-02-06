@@ -7,15 +7,16 @@ from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 
-
-PAT = os.getenv("CLARIFAI_API_KEY")
+PAT:str = ""
+CLARIFAI_API_KEY:str = os.getenv("CLARIFAI_API_KEY")
+PAT = CLARIFAI_API_KEY
 if PAT is None:
     raise ValueError("CLARIFAI_API_KEY env key is unset!")
 
-USER_ID = 'clarifai'
-APP_ID = 'main'
-MODEL_ID = 'general-image-recognition'
-MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40'
+USER_ID:str = 'clarifai'
+APP_ID:str = 'main'
+MODEL_ID:str = 'general-image-recognition'
+MODEL_VERSION_ID:str = 'aa7f35c01e0642fda5cf400f543e7c40'
 
 # Initialize FastAPI app
 app = FastAPI()
