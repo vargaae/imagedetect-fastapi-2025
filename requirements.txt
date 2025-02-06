@@ -2,4 +2,3 @@ fastapi
 uvicorn
 clarifai-grpc
 pydantic
-newsapi
