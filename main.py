@@ -14,19 +14,20 @@ load_dotenv()
 
    
 PAT:str = ''
-PAT = os.getenv("CLARIFAI_API_KEY")
-
-USER_ID = 'clarifai'
-APP_ID = 'main'
-MODEL_ID = 'general-image-recognition'
-MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40'
+PAT:str = os.getenv("CLARIFAI_API_KEY")
+if PAT is None:
+    raise ValueError("CLARIFAI_API_KEY env key is unset!")
+USER_ID:str = 'clarifai'
+APP_ID:str = 'main'
+MODEL_ID:str = 'general-image-recognition'
+MODEL_VERSION_ID:str = 'aa7f35c01e0642fda5cf400f543e7c40'
 
 app = FastAPI()
 
 # 🔹 CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/", "https://ai-2024.onrender.com/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
