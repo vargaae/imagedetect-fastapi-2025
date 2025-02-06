@@ -27,7 +27,7 @@ app = FastAPI()
 # 🔹 CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/", "https://ai-2024.onrender.com/"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
