@@ -2,34 +2,40 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
+from typing import List
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
-PAT:str = ""
-CLARIFAI_API_KEY:str = ""
-CLARIFAI_API_KEY:str = os.getenv("CLARIFAI_API_KEY")
-PAT = CLARIFAI_API_KEY
-if PAT is None:
-    raise ValueError("CLARIFAI_API_KEY env key is unset!")
+class Settings(BaseSettings):
+    app_name: str = "Awesome API"
+    admin_email: str
+    items_per_user: int = 50
+    
+    model_config = SettingsConfigDict(env_file=".env")
+    
+PAT:str = ''
+PAT = os.getenv("CLARIFAI_API_KEY")
 
-USER_ID:str = 'clarifai'
-APP_ID:str = 'main'
-MODEL_ID:str = 'general-image-recognition'
-MODEL_VERSION_ID:str = 'aa7f35c01e0642fda5cf400f543e7c40'
+USER_ID = 'clarifai'
+APP_ID = 'main'
+MODEL_ID = 'general-image-recognition'
+MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40'
 
-# Initialize FastAPI app
+
+settings = Settings()
 app = FastAPI()
 
 # 🔹 CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/", "https://ai-2024.onrender.com/"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

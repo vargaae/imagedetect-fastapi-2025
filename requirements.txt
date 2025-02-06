@@ -2,5 +2,5 @@ fastapi
 uvicorn
 clarifai-grpc
 pydantic
+pydantic_settings
 python-dotenv
-dotenv
