@@ -1,16 +1,17 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
 from pydantic import BaseModel
 
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 
-import os
 
-# Define your variables
 PAT = os.getenv("CLARIFAI_API_KEY")
+if PAT is None:
+    raise ValueError("CLARIFAI_API_KEY env key is unset!")
+
 USER_ID = 'clarifai'
 APP_ID = 'main'
 MODEL_ID = 'general-image-recognition'
@@ -22,7 +23,7 @@ app = FastAPI()
 # 🔹 CORS engedélyezése
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/, https://ai-2024.onrender.com/"],  # <-- MEGENGEDETT ORIGINEK
+    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/, https://ai-2024.onrender.com/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
