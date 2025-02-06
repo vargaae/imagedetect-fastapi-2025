@@ -7,7 +7,12 @@ from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 PAT:str = ""
+CLARIFAI_API_KEY:str = ""
 CLARIFAI_API_KEY:str = os.getenv("CLARIFAI_API_KEY")
 PAT = CLARIFAI_API_KEY
 if PAT is None:
@@ -21,10 +26,10 @@ MODEL_VERSION_ID:str = 'aa7f35c01e0642fda5cf400f543e7c40'
 # Initialize FastAPI app
 app = FastAPI()
 
-# 🔹 CORS engedélyezése
+# 🔹 CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/, https://ai-2024.onrender.com/"],
+    allow_origins=["https://prod.d1kaqjh57drksh.amplifyapp.com/", "https://ai-2024.onrender.com/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
