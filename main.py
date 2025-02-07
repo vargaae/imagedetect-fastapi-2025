@@ -1,5 +1,6 @@
 import os
 import requests
+from datetime import date
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -82,11 +83,11 @@ async def predict(image_input: ImageInput):
 
 
 @app.get("/news/")
-def get_news(query: str = "technology"):
+def get_news(query: str = "chatgpt"):
     if not NEWS_API_KEY:
         raise HTTPException(status_code=500, detail="News API key is missing.")
 
-    url = f"https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}"
+    url = f"https://newsapi.org/v2/everything?q={query}&from=2025-02-06&to=2025-02-07&sortBy=popularity&pageSize=5&apiKey={NEWS_API_KEY}"
     response = requests.get(url)
 
     if response.status_code != 200:
