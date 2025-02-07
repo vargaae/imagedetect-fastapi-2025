@@ -1,4 +1,5 @@
 import os
+import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -21,6 +22,7 @@ USER_ID:str = 'clarifai'
 APP_ID:str = 'main'
 MODEL_ID:str = 'general-image-recognition'
 MODEL_VERSION_ID:str = 'aa7f35c01e0642fda5cf400f543e7c40'
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 app = FastAPI()
 
@@ -77,3 +79,17 @@ async def predict(image_input: ImageInput):
     concepts = [{"name": concept.name, "value": concept.value} for concept in output.data.concepts]
 
     return {"predictions": concepts}
+
+
+@app.get("/news/")
+def get_news(query: str = "technology"):
+    if not NEWS_API_KEY:
+        raise HTTPException(status_code=500, detail="News API key is missing.")
+
+    url = f"https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail=response.json())
+
+    return response.json()
