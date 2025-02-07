@@ -87,7 +87,7 @@ def get_news(query: str = "chatgpt"):
     if not NEWS_API_KEY:
         raise HTTPException(status_code=500, detail="News API key is missing.")
 
-    url = f"https://newsapi.org/v2/everything?q={query}&from=2025-02-06&to=2025-02-07&sortBy=popularity&pageSize=5&apiKey={NEWS_API_KEY}"
+    url = f"https://newsapi.org/v2/everything?q={query}&from=2025-02-07&to=2025-02-07&pageSize=4&apiKey={NEWS_API_KEY}"
     response = requests.get(url)
 
     if response.status_code != 200:
