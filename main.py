@@ -14,7 +14,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-   
 PAT:str = ''
 PAT:str = os.getenv("CLARIFAI_API_KEY")
 if PAT is None:
@@ -87,7 +86,7 @@ def get_news(query: str = "chatgpt"):
     if not NEWS_API_KEY:
         raise HTTPException(status_code=500, detail="News API key is missing.")
 
-    url = f"https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}&pageSize=4&from=2025-02-06"
+    url = f"https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}&from=2025-02-06"
     response = requests.get(url)
 
     if response.status_code != 200:
